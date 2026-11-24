@@ -15,6 +15,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 import { createInterface } from 'node:readline/promises';
+import { loadEnvFile } from 'node:process';
 import { Session } from '../src/session.js';
 import { providerFor } from '../src/providers.js';
 import { Tools } from '../src/tools.js';
@@ -25,6 +26,11 @@ import type { ModelProvider, ProviderKind, Strategy } from '../src/types.js';
 
 // dist/scripts/agent.js → 仓库根。
 const ROOT = resolve(fileURLToPath(new URL('../../', import.meta.url)));
+
+// 直接启动时自动读取仓库根 .env；不需要每次手动 source。
+// Node 的 env-file 行为会保留已存在的 shell 变量，因此显式 export 仍然优先。
+const envFile = resolve(ROOT, '.env');
+if (existsSync(envFile)) loadEnvFile(envFile);
 
 /**
  * 极简参数解析：
@@ -78,6 +84,7 @@ if (flags.has('help')) {
     '  --oneshot    跑完首轮后退出，不进入后续对话',
     '',
     'REPL 命令：/help  /status  /new  /exit',
+    '仓库根 .env 会自动读取；shell 中已存在的 HARNESS_* 变量优先。',
     '编辑和测试都会在终端里单独确认；非 TTY 默认拒绝。',
   ].join('\n'));
   process.exit(0);
@@ -100,7 +107,7 @@ validateBudget(budget);
 
 // 真实 provider 的凭据只从环境变量读取；缺失时在创建会话前失败。
 if (providerName !== 'mock' && (!process.env.HARNESS_BASE_URL || !process.env.HARNESS_MODEL || !process.env.HARNESS_API_KEY)) {
-  throw new Error(`${providerName} 需要 HARNESS_BASE_URL／HARNESS_MODEL／HARNESS_API_KEY；请先 source .env`);
+  throw new Error(`${providerName} 缺少 HARNESS_BASE_URL／HARNESS_MODEL／HARNESS_API_KEY；已尝试自动读取 ${envFile}，请检查仓库根 .env`);
 }
 
 /** 创建一次性 sum fixture；每个 /new 会话都拿一个干净目录。 */

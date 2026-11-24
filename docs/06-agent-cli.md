@@ -4,16 +4,12 @@
 
 ## 快速开始
 
-先加载模型环境变量；程序不会自动读取 `.env`：
-
-```bash
-cd /Users/bytedance/workspace/harness-lab
-set -a; source .env; set +a
-```
+`npm run agent` 会自动读取仓库根 `.env`，不需要每次 `source`。如果 shell 里已经显式导出 `HARNESS_*`，这些值优先于 `.env`。
 
 一次性 fixture 上启动 REPL：
 
 ```bash
+cd /Users/bytedance/workspace/harness-lab
 npm run agent -- --provider openai --example
 ```
 
@@ -22,6 +18,15 @@ npm run agent -- --provider openai --example
 ```text
 你>
 ```
+
+直接启动（不用任何额外环境步骤）：
+
+```bash
+npm run agent
+# 首轮任务> ...
+```
+
+默认 provider 是 `openai`，工作区是当前目录；如果只想在一次性 fixture 上练习，再加 `--example`。编辑和测试仍会单独确认，所以默认工作区也不会无人值守地改文件。
 
 直接输入下一轮任务即可。首轮任务来自 `--example` 的默认任务，也可以自己传：
 
