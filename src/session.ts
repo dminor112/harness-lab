@@ -36,6 +36,16 @@ export class Session {
     if (first?.type !== 'config') throw new Error('没有会话配置');
     return structuredClone(first.data);
   }
+  /** REPL 当前轮的任务文本：优先取最后一条 user 事件，否则用首轮 config.task。 */
+  currentTask(): string {
+    const user = this.entries.filter(e => e.type === 'user').at(-1);
+    return user?.type === 'user' ? user.data.text : this.config.task;
+  }
+  /** 当前轮的起点：最后一条 user 的 seq；首轮没有 user，返回 0。 */
+  currentTurnStartSeq(): number {
+    const user = this.entries.filter(e => e.type === 'user').at(-1);
+    return user?.seq ?? 0;
+  }
   append<K extends EventType>(type: K, data: EventData[K]): LogEvent {
     const event = { seq: this.entries.length + 1, at: new Date().toISOString(), type, data: structuredClone(data) } as LogEvent;
     appendFileSync(this.journal, JSON.stringify(event) + '\n', { mode: 0o600 });

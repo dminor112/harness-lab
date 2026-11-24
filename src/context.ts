@@ -21,11 +21,21 @@ export function prune(text: string, maxChars: number, originalSeq: number): stri
   const head = Math.ceil(usable * 0.65);
   return points.slice(0, head).join('') + marker + points.slice(-(usable - head)).join('');
 }
-/** 将工具调用及结果编成一个不可拆单元；不保留未结束的副作用。 */
-export function historyUnits(events: readonly LogEvent[], limit: number | undefined): { units: HistoryUnit[]; pruned: number } {
+/**
+ * 将事件编成不可拆单元。
+ *
+ * - user 事件是 REPL 的一轮输入；当前轮的最后一条 user 已经由 taskMessage 表达，
+ *   调用方可用 excludeUserSeq 跳过它，避免同一句话在上下文里出现两次。
+ * - assistant+tool_result 必须成对；未完成工具调用拒绝编译。
+ */
+export function historyUnits(events: readonly LogEvent[], limit: number | undefined, excludeUserSeq = 0): { units: HistoryUnit[]; pruned: number } {
   const units: HistoryUnit[] = [];
   let pruned = 0;
   for (const e of events) {
+    if (e.type === 'user') {
+      if (e.seq !== excludeUserSeq) units.push({ seqs: [e.seq], messages: [{ role: 'user', content: e.data.text }] });
+      continue;
+    }
     if (e.type !== 'assistant') continue;
     const message: Message = { role: 'assistant', content: JSON.stringify({ requestId: e.data.requestId, action: e.data.action }) };
     if (e.data.action.kind === 'final') { units.push({ seqs: [e.seq], messages: [message] }); continue; }
@@ -45,8 +55,14 @@ export function validateBudget(b: Budget): void {
   if (b.window < 1000 || b.outputReserve < 100 || b.safetyMargin < 100 || b.recentUnits < 1 || b.toolResultChars < 200) throw new Error('预算低于学习项目最小值');
   if (b.outputReserve + b.safetyMargin >= b.window) throw new Error('输出及安全预留占满上下文');
 }
-export function compileContext(session: Session, tools: ToolSpec[], strategy: Strategy = session.config.strategy): ModelRequest {
-  const { budget, task, workspace } = session.config;
+export function compileContext(
+  session: Session,
+  tools: ToolSpec[],
+  strategy: Strategy = session.config.strategy,
+  currentTask: string = session.config.task,
+  excludeUserSeq = 0,
+): ModelRequest {
+  const { budget, workspace } = session.config;
   validateBudget(budget);
   // 稳定的规则和 schema 放头部；动态状态在后面，便于未来观察 prefix/cache。
   const id = randomUUID();
@@ -58,9 +74,9 @@ export function compileContext(session: Session, tools: ToolSpec[], strategy: St
     '只有 run_tests 返回 ok=true 才能说测试通过。缺信息时读取文件或定向恢复历史。阶段完成后用 save_note 记录约束、文件、证据、失败及下一步；笔记可能过期，需要重新验证。',
     '工具定义：' + JSON.stringify(tools),
   ].join('\n') };
-  const taskMessage: Message = { role: 'user', content: JSON.stringify({ currentTask: task, workspace }) };
-  const raw = historyUnits(session.events, undefined);
-  const projected = strategy === 'full' ? raw : historyUnits(session.events, budget.toolResultChars);
+  const taskMessage: Message = { role: 'user', content: JSON.stringify({ currentTask, workspace }) };
+  const raw = historyUnits(session.events, undefined, excludeUserSeq);
+  const projected = strategy === 'full' ? raw : historyUnits(session.events, budget.toolResultChars, excludeUserSeq);
   const originalTokens = price([system, taskMessage, ...raw.units.flatMap(u => u.messages), requestTag]);
   const inputLimit = budget.window - budget.outputReserve - budget.safetyMargin;
   let selected = [...projected.units];

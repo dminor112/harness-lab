@@ -33,10 +33,18 @@ export interface ProviderResult { reply: Reply; usage?: Usage }
 export interface ModelProvider {
   name: string;
   complete(request: ModelRequest, signal?: AbortSignal): Promise<ProviderResult>;
+  /**
+   * 可选流式接口：每收到一个文本增量调用一次 onToken。
+   * runner 只有在调用方要求实时输出、且 provider 提供该能力时才使用它；
+   * 没有该方法的 mock/manual provider 继续走 complete。
+   */
+  stream?(request: ModelRequest, onToken: (token: string) => void, signal?: AbortSignal): Promise<ProviderResult>;
 }
 export interface ToolResult { ok: boolean; text: string }
 export interface EventData {
   config: SessionConfig;
+  /** REPL 中用户追加的一轮输入；首轮任务存在 config.task，不重复写 user。 */
+  user: { text: string };
   request: ModelRequest;
   assistant: { requestId: string; action: Action; usage?: Usage; latencyMs: number };
   tool_result: { name: string; requestId: string; result: ToolResult };
