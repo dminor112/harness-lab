@@ -1,0 +1,51 @@
+{
+  "revision": "4b399c39a6d1479cd84ca591b4d7c88e24d38a96",
+  "scope": "Selected documentation and compaction source; not a full runtime audit.",
+  "sources": [
+    {
+      "file": "docs/subsystems/compaction.md",
+      "local": "docs__subsystems__compaction.md",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/docs/subsystems/compaction.md"
+    },
+    {
+      "file": "docs/subsystems/session.md",
+      "local": "docs__subsystems__session.md",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/docs/subsystems/session.md"
+    },
+    {
+      "file": "packages/compaction/compaction-basic/src/index.ts",
+      "local": "packages__compaction__compaction-basic__src__index.ts",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/packages/compaction/compaction-basic/src/index.ts"
+    },
+    {
+      "file": "packages/compaction/compaction-tool-result-pruner/src/index.ts",
+      "local": "packages__compaction__compaction-tool-result-pruner__src__index.ts",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/packages/compaction/compaction-tool-result-pruner/src/index.ts"
+    },
+    {
+      "file": "packages/compaction/compaction/src/index.ts",
+      "local": "packages__compaction__compaction__src__index.ts",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/packages/compaction/compaction/src/index.ts"
+    },
+    {
+      "file": "packages/core/agent-loop/README.md",
+      "local": "packages__core__agent-loop__README.md",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/packages/core/agent-loop/README.md"
+    },
+    {
+      "file": "packages/llm/token-meter/README.md",
+      "local": "packages__llm__token-meter__README.md",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/packages/llm/token-meter/README.md"
+    },
+    {
+      "file": "packages/core/session/README.md",
+      "local": "packages__core__session__README.md",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/packages/core/session/README.md"
+    },
+    {
+      "file": "LICENSE",
+      "local": "LICENSE",
+      "url": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/4b399c39a6d1479cd84ca591b4d7c88e24d38a96/LICENSE"
+    }
+  ]
+}

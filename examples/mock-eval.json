@@ -1,0 +1,92 @@
+{
+  "mode": "mock",
+  "evidence": "Scripted mock validates runtime only, not real model performance. Null token counts mean unavailable, NOT zero.",
+  "providerModel": null,
+  "repeats": 1,
+  "results": [
+    {
+      "task": "sum",
+      "strategy": "full",
+      "repeat": 0,
+      "passed": true,
+      "testUnchanged": true,
+      "steps": 6,
+      "toolErrors": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "inputEstimateSum": 8496,
+      "elapsedMs": 1673,
+      "error": null
+    },
+    {
+      "task": "sum-boundaries",
+      "strategy": "full",
+      "repeat": 0,
+      "passed": true,
+      "testUnchanged": true,
+      "steps": 6,
+      "toolErrors": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "inputEstimateSum": 8496,
+      "elapsedMs": 259,
+      "error": null
+    },
+    {
+      "task": "sum",
+      "strategy": "tail",
+      "repeat": 0,
+      "passed": true,
+      "testUnchanged": true,
+      "steps": 6,
+      "toolErrors": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "inputEstimateSum": 8388,
+      "elapsedMs": 261,
+      "error": null
+    },
+    {
+      "task": "sum-boundaries",
+      "strategy": "tail",
+      "repeat": 0,
+      "passed": true,
+      "testUnchanged": true,
+      "steps": 6,
+      "toolErrors": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "inputEstimateSum": 8388,
+      "elapsedMs": 255,
+      "error": null
+    },
+    {
+      "task": "sum",
+      "strategy": "checkpoint",
+      "repeat": 0,
+      "passed": true,
+      "testUnchanged": true,
+      "steps": 6,
+      "toolErrors": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "inputEstimateSum": 8521,
+      "elapsedMs": 264,
+      "error": null
+    },
+    {
+      "task": "sum-boundaries",
+      "strategy": "checkpoint",
+      "repeat": 0,
+      "passed": true,
+      "testUnchanged": true,
+      "steps": 6,
+      "toolErrors": 0,
+      "inputTokens": null,
+      "outputTokens": null,
+      "inputEstimateSum": 8521,
+      "elapsedMs": 258,
+      "error": null
+    }
+  ]
+}

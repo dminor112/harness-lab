@@ -1,0 +1,18 @@
+{
+  "name": "harness-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "学习型 Code Agent：上下文编译、完整轨迹、人工门禁和消融实验",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "lab": "npm run build && node dist/src/cli.js",
+    "demo": "npm run build && node dist/src/cli.js demo",
+    "experiment": "npm run build && node dist/scripts/context-experiment.js",
+    "eval": "npm run build && node dist/scripts/evaluate.js"
+  },
+  "devDependencies": { "@types/node": "^22.0.0", "typescript": "~5.8.3" }
+}

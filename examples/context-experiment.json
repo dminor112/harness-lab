@@ -1,0 +1,92 @@
+{
+  "scope": "Deterministic context compiler experiment ONLY. No model call, no coding-ability claim, no billing token counts.",
+  "caveat": "Checkpoint marker is pre-written by fixture; this only tests plumbing. Real notes need fidelity and stale-state tests.",
+  "results": [
+    {
+      "strategy": "full",
+      "fits": false,
+      "markerPresent": null,
+      "error": "上下文粗估 122001 > 输入预算 9000。当前任务／规则或最新完整工具单元过大，不能静默丢弃；请提高预算或缩小工具输出／笔记。"
+    },
+    {
+      "strategy": "tail",
+      "fits": true,
+      "markerPresent": false,
+      "estimator": "heuristic-not-billing",
+      "originalTokens": 122001,
+      "selectedTokens": 7560,
+      "inputLimit": 9000,
+      "omittedUnits": 9,
+      "prunedResults": 12,
+      "selectedEventSeqs": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "omittedEventSeqs": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "prefixHash": "db7e12a2ff4c6f2e41f77e9a4beb23d2d4950cb9a9bc1e654c1f01c423c8d288"
+    },
+    {
+      "strategy": "checkpoint",
+      "fits": true,
+      "markerPresent": true,
+      "estimator": "heuristic-not-billing",
+      "originalTokens": 122001,
+      "selectedTokens": 7673,
+      "inputLimit": 9000,
+      "omittedUnits": 9,
+      "prunedResults": 12,
+      "selectedEventSeqs": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "omittedEventSeqs": [
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "prefixHash": "db7e12a2ff4c6f2e41f77e9a4beb23d2d4950cb9a9bc1e654c1f01c423c8d288"
+    }
+  ]
+}
