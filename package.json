@@ -10,6 +10,7 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "test": "npm run build && node --test dist/tests/*.test.js",
     "lab": "npm run build && node dist/src/cli.js",
+    "agent": "npm run build && node dist/scripts/agent.js",
     "demo": "npm run build && node dist/src/cli.js demo",
     "experiment": "npm run build && node dist/scripts/context-experiment.js",
     "eval": "npm run build && node dist/scripts/evaluate.js"
